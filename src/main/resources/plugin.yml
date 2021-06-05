@@ -1,0 +1,10 @@
+name: DROLPI
+version: 1.0
+authors:
+  - NatroxDE
+  - DROLPI
+
+main: de.drolpi.dailyreward.DailyReward
+
+commands:
+  reward:
