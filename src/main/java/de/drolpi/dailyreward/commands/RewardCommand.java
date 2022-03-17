@@ -6,13 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/**
- * @author drolpi / Lars Nippert
- * @project DailyReward
- * @date Date: 05.06.2021
- * @time Time: 17:51
- */
-
 public class RewardCommand implements CommandExecutor {
 
     private final RewardInventory rewardInventory;

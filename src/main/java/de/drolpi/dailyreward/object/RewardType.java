@@ -5,13 +5,6 @@ import lombok.Getter;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author drolpi / Lars Nippert
- * @project DailyReward
- * @date Date: 05.06.2021
- * @time Time: 17:33
- */
-
 @AllArgsConstructor
 @Getter
 public enum RewardType {

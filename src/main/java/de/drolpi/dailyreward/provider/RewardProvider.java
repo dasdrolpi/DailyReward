@@ -8,13 +8,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Collection;
 
-/**
- * @author drolpi / Lars Nippert
- * @project DailyReward
- * @date Date: 05.06.2021
- * @time Time: 17:35
- */
-
 public class RewardProvider {
 
     private final RewardStorage rewardStorage;

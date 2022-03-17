@@ -10,13 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
-/**
- * @author drolpi / Lars Nippert
- * @project DailyReward
- * @date Date: 05.06.2021
- * @time Time: 17:52
- */
-
 public class PlayerClickListener implements Listener {
 
     private final RewardInventory rewardInventory;

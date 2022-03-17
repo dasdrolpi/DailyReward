@@ -11,13 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * @author drolpi / Lars Nippert
- * @project DailyReward
- * @date Date: 05.06.2021
- * @time Time: 17:31
- */
-
 public class RewardStorage {
 
     private final static Path PATH = Paths.get("plugins", "dailyreward", "rewardsstorage.json");

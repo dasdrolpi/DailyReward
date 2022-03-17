@@ -18,13 +18,6 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
-/**
- * @author drolpi / Lars Nippert
- * @project DailyReward
- * @date Date: 05.06.2021
- * @time Time: 17:43
- */
-
 public class RewardInventory {
 
     private final Map<Player, Inventory> inventoryMap;
