@@ -4,16 +4,23 @@ import de.drolpi.dailyreward.commands.RewardCommand;
 import de.drolpi.dailyreward.inventory.RewardInventory;
 import de.drolpi.dailyreward.listener.PlayerClickListener;
 import de.drolpi.dailyreward.provider.RewardProvider;
+import de.drolpi.dailyreward.storage.RewardStorage;
+import de.drolpi.dailyreward.storage.RewardStorageLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DailyRewardPlugin extends JavaPlugin {
 
     private RewardProvider rewardProvider;
     private RewardInventory rewardInventory;
+    private RewardStorageLoader rewardStorageLoader;
+    private RewardStorage rewardStorage;
 
     @Override
     public void onEnable() {
-        this.rewardProvider = new RewardProvider();
+        this.rewardStorageLoader = new RewardStorageLoader();
+        this.rewardStorage = rewardStorageLoader.loadOrCreateFile();
+
+        this.rewardProvider = new RewardProvider(rewardStorage);
         this.rewardInventory = new RewardInventory(this);
         var server = getServer();
 
@@ -23,7 +30,7 @@ public class DailyRewardPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        rewardProvider.storage().save();
+        rewardStorageLoader.saveConfig(rewardStorage);
     }
 
     public RewardProvider rewardProvider() {
