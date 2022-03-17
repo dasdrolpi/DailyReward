@@ -29,6 +29,7 @@ public class RewardInventory {
         this.cache = new WeakHashMap<>();
     }
 
+    //TODO: Improve
     public void buildInventory(Inventory inventory, Player player) {
         if (inventory == null) {
             inventory = Bukkit.createInventory(null, 5 * 9, Component.text("§cRewards"));
@@ -39,10 +40,10 @@ public class RewardInventory {
         Collection<RewardObject> resultList = rewardProvider.playerRewards(player);
 
         for (RewardObject result : resultList) {
-            RewardType rewardType = result.getRewardType();
-            inventory.setItem(rewardType.getSlot(), buildItem(Material.GOLD_INGOT, "§7● Coin Reward",
-                    "§8» §7Diese Belohnung beinhaltet §e" + rewardType.getCoins() + " §7Coins",
-                    (isAvailable(result.getTimeStamp()) ? "§8» §aVerfügbar" : "§8» §7Verfügbar am §c" + DateUtil.formatDate(result.getTimeStamp()))));
+            RewardType rewardType = result.rewardType();
+            inventory.setItem(rewardType.slot(), buildItem(Material.GOLD_INGOT, "§7● Coin Reward",
+                    "§8» §7Diese Belohnung beinhaltet §e" + rewardType.coins() + " §7Coins",
+                    (isAvailable(result.timeStamp()) ? "§8» §aVerfügbar" : "§8» §7Verfügbar am §c" + DateUtil.formatDate(result.timeStamp()))));
         }
 
         int[] slots = {0, 8, 18, 26, 27, 35, 36, 44};

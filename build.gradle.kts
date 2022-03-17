@@ -13,5 +13,4 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
-    compileOnly("org.projectlombok:lombok:1.18.16")
 }

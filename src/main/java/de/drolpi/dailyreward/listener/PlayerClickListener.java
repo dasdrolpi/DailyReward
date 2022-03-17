@@ -31,11 +31,11 @@ public class PlayerClickListener implements Listener {
                 event.getCurrentItem().getItemMeta().hasDisplayName() && event.getView().title().equals(Component.text("§cRewards"))) {
 
             for (RewardObject result : rewardProvider.playerRewards(player)) {
-                RewardType rewardType = result.getRewardType();
-                if (rewardType.getSlot() == event.getSlot()) {
+                RewardType rewardType = result.rewardType();
+                if (rewardType.slot() == event.getSlot()) {
 
-                    if (isReady(result.getTimeStamp())) {
-                        player.sendMessage(sendPrefix() + "§7Du hast §e" + rewardType.getCoins() + " §7Coins erhalten!");
+                    if (isReady(result.timeStamp())) {
+                        player.sendMessage(sendPrefix() + "§7Du hast §e" + rewardType.coins() + " §7Coins erhalten!");
                         rewardProvider.resetReward(player, rewardType);
                     } else {
                         player.sendMessage(sendPrefix() + "§7Du kannst diese Belohnung noch §cnicht §7Abholen!");

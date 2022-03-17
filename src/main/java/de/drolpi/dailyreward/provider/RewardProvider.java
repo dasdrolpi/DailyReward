@@ -1,7 +1,6 @@
 package de.drolpi.dailyreward.provider;
 
 import de.drolpi.dailyreward.object.RewardObject;
-import de.drolpi.dailyreward.object.RewardPlayer;
 import de.drolpi.dailyreward.object.RewardType;
 import de.drolpi.dailyreward.storage.RewardStorage;
 import org.bukkit.entity.Player;
@@ -18,13 +17,13 @@ public class RewardProvider {
 
     public void resetReward(Player player, RewardType rewardType) {
         var rewardPlayer = storage.getPlayer(player);
-        var rewardObject = rewardPlayer.getRewards().get(rewardType);
+        var rewardObject = rewardPlayer.rewards().get(rewardType);
 
-        rewardObject.setTimeStamp(System.currentTimeMillis() + rewardType.getTime());
+        rewardObject.setTimeStamp(System.currentTimeMillis() + rewardType.time());
     }
 
     public Collection<RewardObject> playerRewards(Player player) {
-        return storage.getPlayer(player).getRewards().values();
+        return storage.getPlayer(player).rewards().values();
     }
 
     public RewardStorage storage() {
