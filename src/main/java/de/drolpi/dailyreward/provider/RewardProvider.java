@@ -1,33 +1,22 @@
 package de.drolpi.dailyreward.provider;
 
 import de.drolpi.dailyreward.object.RewardObject;
-import de.drolpi.dailyreward.object.RewardPlayer;
 import de.drolpi.dailyreward.object.RewardType;
 import de.drolpi.dailyreward.storage.RewardStorage;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
 
-public class RewardProvider {
-
-    private final RewardStorage rewardStorage;
-
-    public RewardProvider() {
-        this.rewardStorage = RewardStorage.load();
-    }
+public record RewardProvider(RewardStorage storage) {
 
     public void resetReward(Player player, RewardType rewardType) {
-        RewardPlayer rewardPlayer = rewardStorage.getPlayer(player);
+        var rewardPlayer = this.storage.player(player);
+        var rewardObject = rewardPlayer.rewards().get(rewardType);
 
-        RewardObject rewardObject = rewardPlayer.getRewards().get(rewardType);
-        rewardObject.setTimeStamp(System.currentTimeMillis() + rewardType.getTime());
+        rewardObject.setTimeStamp(System.currentTimeMillis() + rewardType.time());
     }
 
-    public Collection<RewardObject> getPlayerRewards(Player player) {
-        return rewardStorage.getPlayer(player).getRewards().values();
-    }
-
-    public RewardStorage getRewardStorage() {
-        return rewardStorage;
+    public Collection<RewardObject> playerRewards(Player player) {
+        return this.storage.player(player).rewards().values();
     }
 }

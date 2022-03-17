@@ -1,61 +1,67 @@
 package de.drolpi.dailyreward.listener;
 
+import de.drolpi.dailyreward.DailyRewardPlugin;
 import de.drolpi.dailyreward.inventory.RewardInventory;
-import de.drolpi.dailyreward.object.RewardObject;
-import de.drolpi.dailyreward.object.RewardType;
 import de.drolpi.dailyreward.provider.RewardProvider;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 
 public class PlayerClickListener implements Listener {
 
     private final RewardInventory rewardInventory;
     private final RewardProvider rewardProvider;
 
-    public PlayerClickListener(RewardInventory rewardInventory) {
-        this.rewardInventory = rewardInventory;
-        this.rewardProvider = rewardInventory.getRewardProvider();
+    public PlayerClickListener(DailyRewardPlugin plugin) {
+        this.rewardInventory = plugin.rewardInventory();
+        this.rewardProvider = plugin.rewardProvider();
     }
 
     @EventHandler
     public void inventoryClick(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) return;
 
-        if(!(event.getWhoClicked() instanceof Player)) return;
+        var item = event.getCurrentItem();
 
-        if(event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() &&
-                event.getCurrentItem().getItemMeta().hasDisplayName() && event.getInventory().getName().equals("§cRewards")) {
+        if (item == null || !item.hasItemMeta())
+            return;
 
-            final Player player = (Player) event.getWhoClicked();
+        var itemMeta = item.getItemMeta();
 
-            for (RewardObject result : rewardProvider.getPlayerRewards(player)) {
-                RewardType rewardType = result.getRewardType();
-                if(rewardType.getSlot() == event.getSlot()) {
+        if (itemMeta == null || !itemMeta.hasDisplayName())
+            return;
 
-                    if (isReady(result.getTimeStamp())) {
-                        player.sendMessage(sendPrefix() + "§7Du hast §e" + rewardType.getCoins() + " §7Coins erhalten!");
-                        rewardProvider.resetReward(player, rewardType);
-                    } else {
-                        player.sendMessage(sendPrefix() + "§7Du kannst diese Belohnung noch §cnicht §7Abholen!");
-                    }
+        var title = event.getView().title();
 
-                    rewardInventory.buildInventory(rewardInventory.getInventory(player), player);
-                    player.updateInventory();
+        if (!title.equals(Component.text("§cRewards")))
+            return;
+
+        for (var result : this.rewardProvider.playerRewards(player)) {
+            var rewardType = result.rewardType();
+            if (rewardType.slot() == event.getSlot()) {
+
+                if (isReady(result.timeStamp())) {
+                    player.sendMessage(prefix() + "§7Du hast §e" + rewardType.coins() + " §7Coins erhalten!");
+                    this.rewardProvider.resetReward(player, rewardType);
+                } else {
+                    player.sendMessage(prefix() + "§7Du kannst diese Belohnung noch §cnicht §7Abholen!");
                 }
+
+                this.rewardInventory.buildInventory(this.rewardInventory.inventory(player), player);
+                player.updateInventory();
             }
-
-            event.setCancelled(true);
-
         }
+
+        event.setCancelled(true);
     }
 
     private boolean isReady(long millis) {
         return System.currentTimeMillis() >= millis;
     }
 
-    private String sendPrefix() {
+    private String prefix() {
         return "§cReward §8» §7";
     }
 

@@ -1,12 +1,7 @@
 package de.drolpi.dailyreward.object;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.util.concurrent.TimeUnit;
 
-@AllArgsConstructor
-@Getter
 public enum RewardType {
 
     FIRST(29, 500, TimeUnit.MILLISECONDS.convert(4, TimeUnit.HOURS)),
@@ -17,4 +12,21 @@ public enum RewardType {
     private final int coins;
     private final long time;
 
+    RewardType(int slot, int coins, long time) {
+        this.slot = slot;
+        this.coins = coins;
+        this.time = time;
+    }
+
+    public int slot() {
+        return this.slot;
+    }
+
+    public int coins() {
+        return this.coins;
+    }
+
+    public long time() {
+        return this.time;
+    }
 }
