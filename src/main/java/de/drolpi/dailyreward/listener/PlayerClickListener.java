@@ -38,18 +38,18 @@ public class PlayerClickListener implements Listener {
         if (!title.equals(Component.text("§cRewards")))
             return;
 
-        for (var result : rewardProvider.playerRewards(player)) {
+        for (var result : this.rewardProvider.playerRewards(player)) {
             var rewardType = result.rewardType();
             if (rewardType.slot() == event.getSlot()) {
 
                 if (isReady(result.timeStamp())) {
                     player.sendMessage(prefix() + "§7Du hast §e" + rewardType.coins() + " §7Coins erhalten!");
-                    rewardProvider.resetReward(player, rewardType);
+                    this.rewardProvider.resetReward(player, rewardType);
                 } else {
                     player.sendMessage(prefix() + "§7Du kannst diese Belohnung noch §cnicht §7Abholen!");
                 }
 
-                rewardInventory.buildInventory(rewardInventory.inventory(player), player);
+                this.rewardInventory.buildInventory(this.rewardInventory.inventory(player), player);
                 player.updateInventory();
             }
         }

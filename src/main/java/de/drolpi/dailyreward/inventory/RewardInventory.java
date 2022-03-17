@@ -32,7 +32,7 @@ public class RewardInventory {
 
         inventory.setItem(4, buildItem(Material.GOLD_INGOT, "§cTägliche Belohnungen", ""));
 
-        var rewards = rewardProvider.playerRewards(player);
+        var rewards = this.rewardProvider.playerRewards(player);
 
         for (var result : rewards) {
             var rewardType = result.rewardType();
@@ -54,11 +54,11 @@ public class RewardInventory {
             inventory.setItem(slot, glass);
         }
 
-        cache.put(player, inventory);
+        this.cache.put(player, inventory);
     }
 
     public Inventory inventory(Player player) {
-        return cache.get(player);
+        return this.cache.get(player);
     }
 
     private boolean isAvailable(long millis) {

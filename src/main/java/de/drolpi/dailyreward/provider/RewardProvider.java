@@ -10,13 +10,13 @@ import java.util.Collection;
 public record RewardProvider(RewardStorage storage) {
 
     public void resetReward(Player player, RewardType rewardType) {
-        var rewardPlayer = storage.player(player);
+        var rewardPlayer = this.storage.player(player);
         var rewardObject = rewardPlayer.rewards().get(rewardType);
 
         rewardObject.setTimeStamp(System.currentTimeMillis() + rewardType.time());
     }
 
     public Collection<RewardObject> playerRewards(Player player) {
-        return storage.player(player).rewards().values();
+        return this.storage.player(player).rewards().values();
     }
 }

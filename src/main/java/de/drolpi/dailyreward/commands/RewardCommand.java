@@ -22,8 +22,8 @@ public class RewardCommand implements CommandExecutor {
         if (args.length != 0)
             return false;
 
-        rewardInventory.buildInventory(rewardInventory.inventory(player), player);
-        player.openInventory(rewardInventory.inventory(player));
+        this.rewardInventory.buildInventory(this.rewardInventory.inventory(player), player);
+        player.openInventory(this.rewardInventory.inventory(player));
 
         return true;
     }

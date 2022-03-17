@@ -16,18 +16,18 @@ public class RewardStorage {
     }
 
     public void createPlayer(Player player) {
-        playerContainer.put(player.getUniqueId(), new RewardPlayer(player.getUniqueId()));
+        this.playerContainer.put(player.getUniqueId(), new RewardPlayer(player.getUniqueId()));
     }
 
     public RewardPlayer player(Player player) {
-        if (!playerContainer.containsKey(player.getUniqueId())) {
+        if (!this.playerContainer.containsKey(player.getUniqueId())) {
             createPlayer(player);
         }
-        return playerContainer.get(player.getUniqueId());
+        return this.playerContainer.get(player.getUniqueId());
     }
 
     public void deletePlayer(Player player) {
-        playerContainer.remove(player.getUniqueId());
+        this.playerContainer.remove(player.getUniqueId());
     }
 
 }

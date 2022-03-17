@@ -24,11 +24,11 @@ public abstract class AbstractConfigurationLoader<T> {
     }
 
     public T loadFile() {
-        return loadFromJson(directory, type);
+        return loadFromJson(this.directory, this.type);
     }
 
     public T createFile() {
-        var parent = directory.getParent();
+        var parent = this.directory.getParent();
 
         if (!existsFile()) {
             if (parent != null && !Files.exists(parent)) {
@@ -61,11 +61,11 @@ public abstract class AbstractConfigurationLoader<T> {
     }
 
     public boolean existsFile() {
-        return Files.exists(directory);
+        return Files.exists(this.directory);
     }
 
     public void saveFile(T config) {
-        saveToJson(config, directory);
+        saveToJson(config, this.directory);
     }
 
     private void saveToJson(Object object, Path externalPath) {
