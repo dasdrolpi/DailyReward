@@ -20,6 +20,8 @@ public class FileController {
     private static final String LOGGER = "CONFIG";
     private static final Gson GSON = new Gson();
 
+    //TODO: Remove
+
     public void copyFileFromJar(ClassLoader loader, String internalPath, Path externalPath) {
         if(loader != null && !Files.exists(externalPath)) {
             try {

@@ -1,38 +1,38 @@
 package de.drolpi.dailyreward.listener;
 
+import de.drolpi.dailyreward.DailyRewardPlugin;
 import de.drolpi.dailyreward.inventory.RewardInventory;
 import de.drolpi.dailyreward.object.RewardObject;
 import de.drolpi.dailyreward.object.RewardType;
 import de.drolpi.dailyreward.provider.RewardProvider;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 
 public class PlayerClickListener implements Listener {
 
     private final RewardInventory rewardInventory;
     private final RewardProvider rewardProvider;
 
-    public PlayerClickListener(RewardInventory rewardInventory) {
-        this.rewardInventory = rewardInventory;
-        this.rewardProvider = rewardInventory.getRewardProvider();
+    public PlayerClickListener(DailyRewardPlugin plugin) {
+        this.rewardInventory = plugin.rewardInventory();
+        this.rewardProvider = plugin.rewardProvider();
     }
+
+    //TODO: Improve
 
     @EventHandler
     public void inventoryClick(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) return;
 
-        if(!(event.getWhoClicked() instanceof Player)) return;
+        if (event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() &&
+                event.getCurrentItem().getItemMeta().hasDisplayName() && event.getView().title().equals(Component.text("§cRewards"))) {
 
-        if(event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() &&
-                event.getCurrentItem().getItemMeta().hasDisplayName() && event.getInventory().getName().equals("§cRewards")) {
-
-            final Player player = (Player) event.getWhoClicked();
-
-            for (RewardObject result : rewardProvider.getPlayerRewards(player)) {
+            for (RewardObject result : rewardProvider.playerRewards(player)) {
                 RewardType rewardType = result.getRewardType();
-                if(rewardType.getSlot() == event.getSlot()) {
+                if (rewardType.getSlot() == event.getSlot()) {
 
                     if (isReady(result.getTimeStamp())) {
                         player.sendMessage(sendPrefix() + "§7Du hast §e" + rewardType.getCoins() + " §7Coins erhalten!");
@@ -41,7 +41,7 @@ public class PlayerClickListener implements Listener {
                         player.sendMessage(sendPrefix() + "§7Du kannst diese Belohnung noch §cnicht §7Abholen!");
                     }
 
-                    rewardInventory.buildInventory(rewardInventory.getInventory(player), player);
+                    rewardInventory.buildInventory(rewardInventory.inventory(player), player);
                     player.updateInventory();
                 }
             }

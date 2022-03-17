@@ -10,24 +10,24 @@ import java.util.Collection;
 
 public class RewardProvider {
 
-    private final RewardStorage rewardStorage;
+    private final RewardStorage storage;
 
     public RewardProvider() {
-        this.rewardStorage = RewardStorage.load();
+        this.storage = RewardStorage.load();
     }
 
     public void resetReward(Player player, RewardType rewardType) {
-        RewardPlayer rewardPlayer = rewardStorage.getPlayer(player);
+        var rewardPlayer = storage.getPlayer(player);
+        var rewardObject = rewardPlayer.getRewards().get(rewardType);
 
-        RewardObject rewardObject = rewardPlayer.getRewards().get(rewardType);
         rewardObject.setTimeStamp(System.currentTimeMillis() + rewardType.getTime());
     }
 
-    public Collection<RewardObject> getPlayerRewards(Player player) {
-        return rewardStorage.getPlayer(player).getRewards().values();
+    public Collection<RewardObject> playerRewards(Player player) {
+        return storage.getPlayer(player).getRewards().values();
     }
 
-    public RewardStorage getRewardStorage() {
-        return rewardStorage;
+    public RewardStorage storage() {
+        return storage;
     }
 }

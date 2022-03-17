@@ -16,6 +16,8 @@ public class RewardStorage {
     private final static Path PATH = Paths.get("plugins", "dailyreward", "rewardsstorage.json");
     private final Map<UUID, RewardPlayer> playerContainer;
 
+    //TODO: Improve
+
     public RewardStorage() {
         this.playerContainer = new HashMap<>();
     }
