@@ -39,7 +39,7 @@ public abstract class AbstractConfigurationLoader<T> {
             }
 
             T config = createConfig();
-            saveConfig(config);
+            saveFile(config);
             return config;
         }
 
@@ -48,16 +48,6 @@ public abstract class AbstractConfigurationLoader<T> {
 
     public T createConfig() {
         return createObject();
-    }
-
-    public boolean deleteFile() {
-        try {
-            return Files.deleteIfExists(directory);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-
-        return false;
     }
 
     public abstract T createObject();
@@ -70,39 +60,15 @@ public abstract class AbstractConfigurationLoader<T> {
         return loadFile();
     }
 
-    public T loadOrCreateConfig() {
-        if (!existsFile()) {
-            return createConfig();
-        }
-
-        return loadFile();
-    }
-
-    public void loadOrCreateFile(Consumer<T> createConsumer, Consumer<T> loadConsumer) {
-        if (!existsFile()) {
-            createConsumer.accept(createFile());
-        }
-
-        loadConsumer.accept(loadFile());
-    }
-
-    public void loadOrCreateConfig(Consumer<T> createConsumer, Consumer<T> loadConsumer) {
-        if (!existsFile()) {
-            createConsumer.accept(createConfig());
-        }
-
-        loadConsumer.accept(loadFile());
-    }
-
     public boolean existsFile() {
         return Files.exists(directory);
     }
 
-    public void saveConfig(T config) {
+    public void saveFile(T config) {
         saveToJson(config, directory);
     }
 
-    public void saveToJson(Object object, Path externalPath) {
+    private void saveToJson(Object object, Path externalPath) {
         if (object == null) {
             throw new IllegalArgumentException("The provided object can not be null.");
         }
@@ -117,7 +83,7 @@ public abstract class AbstractConfigurationLoader<T> {
         }
     }
 
-    public T loadFromJson(Path source, Class<? extends T> objectClass) {
+    private T loadFromJson(Path source, Class<? extends T> objectClass) {
         if (source == null) {
             throw new IllegalArgumentException("The provided path can not be null.");
         }

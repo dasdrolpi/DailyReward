@@ -13,8 +13,8 @@ public class RewardPlayer {
         this.uuid = uuid;
         this.rewards = new HashMap<>();
 
-        for (RewardType value : RewardType.values()) {
-            RewardObject rewardObject = new RewardObject(value);
+        for (var value : RewardType.values()) {
+            var rewardObject = new RewardObject(value);
             rewardObject.setTimeStamp(0);
             this.rewards.put(value, rewardObject);
         }

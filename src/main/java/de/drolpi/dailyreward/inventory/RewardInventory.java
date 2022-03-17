@@ -1,8 +1,6 @@
 package de.drolpi.dailyreward.inventory;
 
 import de.drolpi.dailyreward.DailyRewardPlugin;
-import de.drolpi.dailyreward.object.RewardObject;
-import de.drolpi.dailyreward.object.RewardType;
 import de.drolpi.dailyreward.provider.RewardProvider;
 import de.drolpi.dailyreward.util.DateUtil;
 import net.kyori.adventure.text.Component;
@@ -11,10 +9,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
@@ -29,7 +25,6 @@ public class RewardInventory {
         this.cache = new WeakHashMap<>();
     }
 
-    //TODO: Improve
     public void buildInventory(Inventory inventory, Player player) {
         if (inventory == null) {
             inventory = Bukkit.createInventory(null, 5 * 9, Component.text("§cRewards"));
@@ -37,22 +32,25 @@ public class RewardInventory {
 
         inventory.setItem(4, buildItem(Material.GOLD_INGOT, "§cTägliche Belohnungen", ""));
 
-        Collection<RewardObject> resultList = rewardProvider.playerRewards(player);
+        var rewards = rewardProvider.playerRewards(player);
 
-        for (RewardObject result : resultList) {
-            RewardType rewardType = result.rewardType();
-            inventory.setItem(rewardType.slot(), buildItem(Material.GOLD_INGOT, "§7● Coin Reward",
+        for (var result : rewards) {
+            var rewardType = result.rewardType();
+            inventory.setItem(rewardType.slot(), buildItem(
+                    Material.GOLD_INGOT,
+                    "§7● Coin Reward",
                     "§8» §7Diese Belohnung beinhaltet §e" + rewardType.coins() + " §7Coins",
-                    (isAvailable(result.timeStamp()) ? "§8» §aVerfügbar" : "§8» §7Verfügbar am §c" + DateUtil.formatDate(result.timeStamp()))));
+                    (isAvailable(result.timeStamp()) ? "§8» §aVerfügbar" : "§8» §7Verfügbar am §c" + DateUtil.formatDate(result.timeStamp()))
+            ));
         }
 
         int[] slots = {0, 8, 18, 26, 27, 35, 36, 44};
-        ItemStack glass = buildItem(Material.GRAY_STAINED_GLASS_PANE, "§8 ");
+        var glass = buildItem(Material.GRAY_STAINED_GLASS_PANE, "§8 ");
 
-        for (int i = 8; i < 18; i++) {
+        for (var i = 8; i < 18; i++) {
             inventory.setItem(i, glass);
         }
-        for (int slot : slots) {
+        for (var slot : slots) {
             inventory.setItem(slot, glass);
         }
 
@@ -68,8 +66,8 @@ public class RewardInventory {
     }
 
     private ItemStack buildItem(Material material, String display, String... loreList) {
-        ItemStack itemStack = new ItemStack(material, 1);
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        var itemStack = new ItemStack(material, 1);
+        var itemMeta = itemStack.getItemMeta();
         itemMeta.displayName(Component.text(display));
         itemMeta.lore(Arrays.stream(loreList).map(Component::text).collect(Collectors.toList()));
         itemStack.setItemMeta(itemMeta);

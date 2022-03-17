@@ -30,7 +30,7 @@ public class DailyRewardPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        rewardStorageLoader.saveConfig(rewardStorage);
+        rewardStorageLoader.saveFile(rewardStorage);
     }
 
     public RewardProvider rewardProvider() {
