@@ -1,4 +1,4 @@
-package de.drolpi.dailyreward.commands;
+package de.drolpi.dailyreward.command;
 
 import de.drolpi.dailyreward.DailyRewardPlugin;
 import de.drolpi.dailyreward.inventory.RewardInventory;

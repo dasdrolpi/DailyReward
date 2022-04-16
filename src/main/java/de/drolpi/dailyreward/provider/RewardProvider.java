@@ -1,7 +1,7 @@
 package de.drolpi.dailyreward.provider;
 
-import de.drolpi.dailyreward.object.RewardObject;
-import de.drolpi.dailyreward.object.RewardType;
+import de.drolpi.dailyreward.model.RewardObject;
+import de.drolpi.dailyreward.model.RewardType;
 import de.drolpi.dailyreward.storage.RewardStorage;
 import org.bukkit.entity.Player;
 

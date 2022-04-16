@@ -1,4 +1,4 @@
-package de.drolpi.dailyreward.object;
+package de.drolpi.dailyreward.model;
 
 public class RewardObject {
 

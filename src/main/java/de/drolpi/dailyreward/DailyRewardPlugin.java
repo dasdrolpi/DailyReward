@@ -1,6 +1,6 @@
 package de.drolpi.dailyreward;
 
-import de.drolpi.dailyreward.commands.RewardCommand;
+import de.drolpi.dailyreward.command.RewardCommand;
 import de.drolpi.dailyreward.inventory.RewardInventory;
 import de.drolpi.dailyreward.listener.PlayerClickListener;
 import de.drolpi.dailyreward.provider.RewardProvider;

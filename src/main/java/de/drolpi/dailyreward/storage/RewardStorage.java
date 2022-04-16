@@ -1,6 +1,6 @@
 package de.drolpi.dailyreward.storage;
 
-import de.drolpi.dailyreward.object.RewardPlayer;
+import de.drolpi.dailyreward.model.RewardPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
