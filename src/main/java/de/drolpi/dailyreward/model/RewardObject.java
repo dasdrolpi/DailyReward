@@ -1,5 +1,7 @@
 package de.drolpi.dailyreward.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RewardObject {
 
     private final RewardType rewardType;
@@ -9,7 +11,7 @@ public class RewardObject {
         this.rewardType = rewardType;
     }
 
-    public RewardType rewardType() {
+    public @NotNull RewardType rewardType() {
         return this.rewardType;
     }
 

@@ -1,5 +1,7 @@
 package de.drolpi.dailyreward.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -18,7 +20,7 @@ public class RewardPlayer {
         }
     }
 
-    public Map<RewardType, RewardObject> rewards() {
+    public @NotNull Map<RewardType, RewardObject> rewards() {
         return this.rewards;
     }
 }

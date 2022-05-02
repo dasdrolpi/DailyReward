@@ -16,20 +16,20 @@ public class RewardStorage {
         this.playerContainer = new HashMap<>();
     }
 
-    public RewardPlayer createPlayer(Player player) {
+    public @NotNull RewardPlayer createPlayer(@NotNull Player player) {
         var rewardPlayer = new RewardPlayer();
         this.playerContainer.put(player.getUniqueId(), rewardPlayer);
         return rewardPlayer;
     }
 
-    public @NotNull RewardPlayer player(Player player) {
+    public @NotNull RewardPlayer player(@NotNull Player player) {
         if (!this.playerContainer.containsKey(player.getUniqueId())) {
             return createPlayer(player);
         }
         return this.playerContainer.get(player.getUniqueId());
     }
 
-    public void deletePlayer(Player player) {
+    public void deletePlayer(@NotNull Player player) {
         this.playerContainer.remove(player.getUniqueId());
     }
 
