@@ -16,7 +16,7 @@ public class RewardStorage {
     }
 
     public void createPlayer(Player player) {
-        this.playerContainer.put(player.getUniqueId(), new RewardPlayer(player.getUniqueId()));
+        this.playerContainer.put(player.getUniqueId(), new RewardPlayer());
     }
 
     public RewardPlayer player(Player player) {
