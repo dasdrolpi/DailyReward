@@ -3,14 +3,12 @@ package de.drolpi.dailyreward;
 import de.drolpi.dailyreward.command.RewardCommand;
 import de.drolpi.dailyreward.inventory.RewardInventory;
 import de.drolpi.dailyreward.listener.PlayerClickListener;
-import de.drolpi.dailyreward.provider.RewardProvider;
 import de.drolpi.dailyreward.storage.RewardStorage;
 import de.drolpi.dailyreward.storage.RewardStorageLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DailyRewardPlugin extends JavaPlugin {
 
-    private RewardProvider rewardProvider;
     private RewardInventory rewardInventory;
     private RewardStorageLoader rewardStorageLoader;
     private RewardStorage rewardStorage;
@@ -20,7 +18,6 @@ public class DailyRewardPlugin extends JavaPlugin {
         this.rewardStorageLoader = new RewardStorageLoader();
         this.rewardStorage = rewardStorageLoader.loadOrCreateFile();
 
-        this.rewardProvider = new RewardProvider(rewardStorage);
         this.rewardInventory = new RewardInventory(this);
         var server = getServer();
 
@@ -33,8 +30,8 @@ public class DailyRewardPlugin extends JavaPlugin {
         this.rewardStorageLoader.saveFile(this.rewardStorage);
     }
 
-    public RewardProvider rewardProvider() {
-        return this.rewardProvider;
+    public RewardStorage rewardStorage() {
+        return this.rewardStorage;
     }
 
     public RewardInventory rewardInventory() {

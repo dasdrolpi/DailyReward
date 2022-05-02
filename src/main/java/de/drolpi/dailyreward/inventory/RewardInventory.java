@@ -1,7 +1,7 @@
 package de.drolpi.dailyreward.inventory;
 
 import de.drolpi.dailyreward.DailyRewardPlugin;
-import de.drolpi.dailyreward.provider.RewardProvider;
+import de.drolpi.dailyreward.storage.RewardStorage;
 import de.drolpi.dailyreward.util.DateUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 
 public class RewardInventory {
 
-    private final RewardProvider rewardProvider;
+    private final RewardStorage rewardStorage;
     private final Map<Player, Inventory> cache;
 
     public RewardInventory(DailyRewardPlugin plugin) {
-        this.rewardProvider = plugin.rewardProvider();
+        this.rewardStorage = plugin.rewardStorage();
         this.cache = new WeakHashMap<>();
     }
 
@@ -32,15 +32,15 @@ public class RewardInventory {
 
         inventory.setItem(4, buildItem(Material.GOLD_INGOT, "§cTägliche Belohnungen", ""));
 
-        var rewards = this.rewardProvider.playerRewards(player);
+        var rewards = this.rewardStorage.playerRewards(player);
 
         for (var result : rewards) {
             var rewardType = result.rewardType();
             inventory.setItem(rewardType.slot(), buildItem(
-                    Material.GOLD_INGOT,
-                    "§7● Coin Reward",
-                    "§8» §7Diese Belohnung beinhaltet §e" + rewardType.coins() + " §7Coins",
-                    (isAvailable(result.timeStamp()) ? "§8» §aVerfügbar" : "§8» §7Verfügbar am §c" + DateUtil.formatDate(result.timeStamp()))
+                Material.GOLD_INGOT,
+                "§7● Coin Reward",
+                "§8» §7Diese Belohnung beinhaltet §e" + rewardType.coins() + " §7Coins",
+                (isAvailable(result.timeStamp()) ? "§8» §aVerfügbar" : "§8» §7Verfügbar am §c" + DateUtil.formatDate(result.timeStamp()))
             ));
         }
 

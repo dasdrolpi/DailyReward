@@ -2,7 +2,7 @@ package de.drolpi.dailyreward.listener;
 
 import de.drolpi.dailyreward.DailyRewardPlugin;
 import de.drolpi.dailyreward.inventory.RewardInventory;
-import de.drolpi.dailyreward.provider.RewardProvider;
+import de.drolpi.dailyreward.storage.RewardStorage;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,11 +12,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class PlayerClickListener implements Listener {
 
     private final RewardInventory rewardInventory;
-    private final RewardProvider rewardProvider;
+    private final RewardStorage rewardStorage;
 
     public PlayerClickListener(DailyRewardPlugin plugin) {
         this.rewardInventory = plugin.rewardInventory();
-        this.rewardProvider = plugin.rewardProvider();
+        this.rewardStorage = plugin.rewardStorage();
     }
 
     @EventHandler
@@ -38,13 +38,13 @@ public class PlayerClickListener implements Listener {
         if (!title.equals(Component.text("§cRewards")))
             return;
 
-        for (var result : this.rewardProvider.playerRewards(player)) {
+        for (var result : this.rewardStorage.playerRewards(player)) {
             var rewardType = result.rewardType();
             if (rewardType.slot() == event.getSlot()) {
 
                 if (isReady(result.timeStamp())) {
                     player.sendMessage(prefix() + "§7Du hast §e" + rewardType.coins() + " §7Coins erhalten!");
-                    this.rewardProvider.resetReward(player, rewardType);
+                    this.rewardStorage.resetReward(player, rewardType);
                 } else {
                     player.sendMessage(prefix() + "§7Du kannst diese Belohnung noch §cnicht §7Abholen!");
                 }
